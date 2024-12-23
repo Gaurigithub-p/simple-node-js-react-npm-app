@@ -9,6 +9,16 @@ pipeline {
         CI = 'true'
     }
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the repository
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],  // Or the appropriate branch you want to build from
+                    userRemoteConfigs: [[url: 'https://github.com/patebija/simple-node-project.git', credentialsId: 'Jenkins']]
+                ]
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm install'
